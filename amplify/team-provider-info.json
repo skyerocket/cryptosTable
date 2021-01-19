@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cryptotest-dev-144928-authRole",
+      "UnauthRoleArn": "arn:aws:iam::999441130264:role/amplify-cryptotest-dev-144928-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::999441130264:role/amplify-cryptotest-dev-144928-authRole",
+      "Region": "ap-southeast-2",
+      "DeploymentBucketName": "amplify-cryptotest-dev-144928-deployment",
+      "UnauthRoleName": "amplify-cryptotest-dev-144928-unauthRole",
+      "StackName": "amplify-cryptotest-dev-144928",
+      "StackId": "arn:aws:cloudformation:ap-southeast-2:999441130264:stack/amplify-cryptotest-dev-144928/2ba05940-5940-11eb-81fa-027d8657c1ec",
+      "AmplifyAppId": "d1t55qp72aahmj"
+    },
+    "categories": {
+      "auth": {
+        "cryptotestcbb2c674": {}
+      }
+    }
+  }
+}

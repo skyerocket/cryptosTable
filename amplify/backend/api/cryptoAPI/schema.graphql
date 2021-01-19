@@ -1,0 +1,11 @@
+type Crypto @model {
+  id: ID!
+  currency: String!
+  date: String!
+  open: Float!
+  high: Float!
+  low: Float!
+  close: Float!
+  volume: Float!
+  marketCap: Float!
+}
