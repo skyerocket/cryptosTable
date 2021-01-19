@@ -70,7 +70,7 @@ function App() {
      label: "Price",
      options: {
       filter: false,
-      sort: false,
+      sort: true,
      }
     },
     {
@@ -124,4 +124,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);

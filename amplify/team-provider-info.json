@@ -12,6 +12,12 @@
       "AmplifyAppId": "d1t55qp72aahmj"
     },
     "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1t55qp72aahmj",
+          "type": "manual"
+        }
+      },
       "auth": {
         "cryptotestcbb2c674": {}
       }
