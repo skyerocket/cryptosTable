@@ -13,8 +13,6 @@ export const getCrypto = /* GraphQL */ `
       close
       volume
       marketCap
-      createdAt
-      updatedAt
     }
   }
 `;

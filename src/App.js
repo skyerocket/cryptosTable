@@ -5,7 +5,7 @@ import awsconfig from './aws-exports';
 import { AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 import React, { useState, useEffect } from 'react';
 import MUIDataTable from "mui-datatables";
-
+import _ from 'lodash';
 
 Amplify.configure(awsconfig);
 
@@ -21,72 +21,77 @@ function App() {
         const data = await API.graphql(graphqlOperation(listCryptos, {"limit": 5000}));
         const list = data.data.listCryptos.items;
         console.log('list', list);
-        setCryptos(list);
+        const results = dealWithData(list);
+        console.log('results', results);
+        setCryptos(results);
     } catch (error) {
         console.log('error on fetching data', error);
     }
   };
 
+  const dealWithData = data => {
+    const results = [];
+    const groupby = _.groupBy(data, row => {
+      return row.currency;
+    });
+    for (let currency in groupby) {
+      const sortby = groupby[currency].sort((a,b) => {
+        let dateA = new Date(a.date);
+        let dateB = new Date(b.date);
+        return dateB - dateA
+      })
+      let latest = sortby[0];
+      let diff24 = sortby[1];
+      let diff7 = sortby[6];
+      const result = {
+        "currency": latest.currency,
+        "price": latest.close,
+        "diff24": `${((latest.close - diff24.close)/latest.close * 100).toFixed(1)}%`,
+        "diff7": `${((latest.close - diff7.close)/latest.close * 100).toFixed(1)}%`,
+        "diffV": `${parseInt(latest.volume - diff24.volume).toLocaleString()}`,
+        "marketCap": parseInt(latest.marketCap).toLocaleString()
+      }
+      results.push(result)
+    }
+    return results
+  }
+
   const columns = [
-    {
-     name: "id",
-     label: "ID",
-     options: {
-      filter: false,
-      sort: true,
-     }
-    },
     {
      name: "currency",
      label: "Currency",
      options: {
-      filter: true,
-      sort: false,
+      filter: false,
+      sort: true,
      }
     },
     {
-     name: "date",
-     label: "Date",
+     name: "price",
+     label: "Price",
      options: {
       filter: false,
       sort: false,
      }
     },
     {
-     name: "open",
-     label: "Open",
+     name: "diff24",
+     label: "24h",
      options: {
       filter: false,
       sort: true,
      },
     },
     {
-      name: "high",
-      label: "High",
+      name: "diff7",
+      label: "7d",
       options: {
        filter: false,
        sort: true,
       },
      },
      {
-      name: "low",
-      label: "Low",
-      options: {
-       filter: false,
-       sort: true,
-      },
-     },
-     {
-      name: "close",
-      label: "Close",
-      options: {
-       filter: false,
-       sort: true,
-      },
-     },
-     {
-      name: "volume",
-      label: "Volume",
+      name: "diffV",
+      label: "24h Volume",
       options: {
        filter: false,
        sort: true,
@@ -94,7 +99,7 @@ function App() {
      },
      {
       name: "marketCap",
-      label: "Market Cap",
+      label: "Mkt Cap",
       options: {
        filter: false,
        sort: true,
